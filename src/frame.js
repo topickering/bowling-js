@@ -6,7 +6,7 @@ function Frame() {
   this._inPlay = false;
   this._strike = false;
   this._spare = false;
-  this._frameScore;
+  this._frameScore = 0;
 };
 
 Frame.prototype.start = function() {
@@ -48,11 +48,16 @@ Frame.prototype.score = function() {
 };
 
 Frame.prototype.bonusScore = function() {
-  return this._bonusPins.reduce(total);
+  if (this._bonusPins.length != 0) {
+    return this._bonusPins.reduce(total);
+  }
+  else {
+    return 0;
+  }
 };
 
 Frame.prototype.frameScore = function() {
-  this._frameScore = this.score() + this.bonusScore();
+  this._frameScore = (this.score() + this.bonusScore());
   return this._frameScore;
 };
 
@@ -82,6 +87,36 @@ Frame.prototype.checkBonus = function() {
 Frame.prototype.checkToFinish = function() {
   if ((this.strike()) || (this._pins.length === 2)) {
     this.finish();
+  }
+};
+
+Frame.prototype.bonusFull = function() {
+  if (this._spare && (this._bonusPins.length === 1)) {
+    return true
+  }
+  if (this._strike && (this._bonusPins.length === 2)) {
+    return true
+  }
+  else {
+    return false
+  }
+};
+
+Frame.prototype.isBonus = function() {
+  if (this._strike || this._spare) {
+    return true
+  }
+};
+
+Frame.prototype.frameOver = function() {
+  if (this.isBonus() && this.bonusFull()) {
+    return true
+  }
+  if (this._pins.length === 2) {
+    return true
+  }
+  else {
+    return false
   }
 };
 
