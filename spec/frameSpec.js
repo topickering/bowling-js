@@ -34,11 +34,11 @@ describe('Frame', function() {
       expect(frame.add(2)).toEqual('Not in play');
     });
     it('records scores up to a maximum of ten per roll', function() {
-      expect(frame.add(11)).toEqual('Maximum of 10 per roll');
+      expect(frame.add(11)).toEqual('Foul Roll');
     });
     it('records scores up to a maximum of ten per frame', function() {
       frame.add(9);
-      expect(frame.add(2)).toEqual('Maximum of 10 per frame');
+      expect(frame.add(2)).toEqual('Foul Roll');
     });
   });
 

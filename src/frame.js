@@ -21,11 +21,11 @@ Frame.prototype.add = function(number) {
   if ((this.inPlay()) === false) {
     return 'Not in play';
   }
-  if (number > 10) {
-    return 'Maximum of 10 per roll';
+  if (this._pins.length === 2) {
+    return 'Only 2 rolls a frame'
   }
-  if ((this._pins[0] + number) > 10 ) {
-    return 'Maximum of 10 per frame';
+  if (this.foulRoll(number)) {
+    return 'Foul Roll';
   }
   else {
     this._pins.push(number);
@@ -112,11 +112,29 @@ Frame.prototype.frameOver = function() {
   if (this.isBonus() && this.bonusFull()) {
     return true
   }
-  if (this._pins.length === 2) {
+  if ((this._pins.length === 2) && (this.isBonus() != true)) {
     return true
   }
   else {
     return false
+  }
+};
+
+Frame.prototype.maxLeft = function() {
+  if (this._pins.length < 1) {
+    return 10;
+  }
+  if (this._pins.length === 1) {
+    return (10 - (this.score()))
+  }
+  else {
+    return 0
+  }
+};
+
+Frame.prototype.foulRoll = function(number) {
+  if (number > this.maxLeft()) {
+      return true
   }
 };
 

@@ -31,7 +31,7 @@ Game.prototype.bonusAdd = function(number) {
 };
 
 Game.prototype.runningTotal = function() {
-  var frameScores = [];
+  var frameScores = [0];
   this._frames.forEach(function(frame) {
     if (frame._pins.length != 0) {
       frameScores.push(frame.frameScore());
@@ -52,11 +52,11 @@ Game.prototype.frameIndexUpdate = function() {
 };
 
 Game.prototype.enterRoll = function(number) {
-  game.bonusAdd(number);
-  game.add(number);
-  game.runningTotal();
-  game.frameIndexUpdate();
-  game.finalScore();
+  if (!this.foulRoll(number)) { this.bonusAdd(number); };
+  this.add(number);
+  this.runningTotal();
+  this.frameIndexUpdate();
+  this.finalScore();
 };
 
 Game.prototype._framesLeft = function() {
@@ -74,6 +74,12 @@ Game.prototype.gameOver = function() {
 Game.prototype.finalScore = function() {
   if (this.gameOver()) {
     console.log('Game Over. Your score: ' + this.runningTotal());
+    return true
+  }
+};
+
+Game.prototype.foulRoll = function(number) {
+  if (this.currentFrame().foulRoll(number)) {
     return true
   }
 };
