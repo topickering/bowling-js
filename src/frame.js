@@ -18,7 +18,7 @@ Frame.prototype.finish = function() {
 };
 
 Frame.prototype.add = function(number) {
-  if ((this.inPlay()) === false) {
+  if ((this.inPlay()) === false || this.isBonus()) {
     return 'Not in play';
   }
   if (this._pins.length === 2) {
@@ -35,6 +35,9 @@ Frame.prototype.add = function(number) {
 };
 
 Frame.prototype.bonusAdd = function(number) {
+  if (this.foulRoll(number)) {
+    return 'Foul Roll';
+  }
   if ((this.strike()) && (this._bonusPins.length < 2)) {
     this._bonusPins.push(number);
   }
@@ -124,17 +127,40 @@ Frame.prototype.maxLeft = function() {
   if (this._pins.length < 1) {
     return 10;
   }
-  if (this._pins.length === 1) {
-    return (10 - (this.score()))
+  if (this._pins.length === 1 && !this._strike) {
+    return (10 - this.score());
+  }
+  if (this.firstBonusRoll()) {
+    return 10;
+  }
+  if (this.secondBonusRoll()) {
+    if (this.bonusScore() === 10) {
+      return 10;
+    }
+    else {
+      return (10 - this.bonusScore())
+    }
   }
   else {
-    return 0
+    return 0;
   }
 };
 
 Frame.prototype.foulRoll = function(number) {
   if (number > this.maxLeft()) {
       return true
+  }
+};
+
+Frame.prototype.firstBonusRoll = function() {
+  if (this.isBonus() && (this._bonusPins.length < 1)) {
+    return true;
+  }
+};
+
+Frame.prototype.secondBonusRoll = function() {
+  if (this.strike() && (this._bonusPins.length === 1)) {
+    return true;
   }
 };
 

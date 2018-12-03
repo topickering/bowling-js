@@ -11,7 +11,7 @@ Game.prototype.setUp = function() {
   for (var i=0; i<10; i++) {
     frames.push(new Frame);
   };
-  return frames
+  return frames;
 };
 
 Game.prototype.add = function(number) {
@@ -52,7 +52,9 @@ Game.prototype.frameIndexUpdate = function() {
 };
 
 Game.prototype.enterRoll = function(number) {
-  if (!this.foulRoll(number)) { this.bonusAdd(number); };
+  // if (!this.foulRoll(number)) {
+    this.bonusAdd(number);
+  // };
   this.add(number);
   this.runningTotal();
   this.frameIndexUpdate();
@@ -61,26 +63,26 @@ Game.prototype.enterRoll = function(number) {
 
 Game.prototype._framesLeft = function() {
   if (this._currentFrameIndex < 9) {
-    return true
+    return true;
   }
 };
 
 Game.prototype.gameOver = function() {
   if (this._frames[9].frameOver()) {
-    return true
+    return true;
   }
 };
 
 Game.prototype.finalScore = function() {
   if (this.gameOver()) {
     console.log('Game Over. Your score: ' + this.runningTotal());
-    return true
+    return true;
   }
 };
 
 Game.prototype.foulRoll = function(number) {
   if (this.currentFrame().foulRoll(number)) {
-    return true
+    return true;
   }
 };
 
