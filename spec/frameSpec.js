@@ -54,9 +54,9 @@ describe('Frame', function() {
     it('stores two rolls if there was a strike', function() {
       frame.add(10);
       frame.bonusAdd(8);
-      frame.bonusAdd(4);
+      frame.bonusAdd(2);
       expect(frame._bonusPins).toContain(8);
-      expect(frame._bonusPins).toContain(4);
+      expect(frame._bonusPins).toContain(2);
     });
   });
 
@@ -72,8 +72,8 @@ describe('Frame', function() {
     it('returns the total of any bonus rolls', function() {
       frame.add(10);
       frame.bonusAdd(4);
-      frame.bonusAdd(8);
-      expect(frame.bonusScore()).toEqual(12);
+      frame.bonusAdd(5);
+      expect(frame.bonusScore()).toEqual(9);
     });
   });
 
@@ -81,8 +81,8 @@ describe('Frame', function() {
     it('returns the total score for the frame', function() {
       frame.add(10);
       frame.bonusAdd(4);
-      frame.bonusAdd(8);
-      expect(frame.frameScore()).toEqual(22);
+      frame.bonusAdd(5);
+      expect(frame.frameScore()).toEqual(19);
     });
   });
 
