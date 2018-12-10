@@ -68,6 +68,14 @@ $(document).ready(function() {
   function update() {
     updateRunningTotal();
     updateCurrentFrame();
+    // checkHidden();
   };
+
+  // function checkHidden() {
+  //   var value = button.value
+  //   if ((game.currentFrame().maxLeft()) > button.value) {
+  //     $('#' + value).attr('class', 'hidden')
+  //   };
+  // };
 
 });
